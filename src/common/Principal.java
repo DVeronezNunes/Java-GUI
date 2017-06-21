@@ -44,15 +44,20 @@ public class Principal extends JFrame{
 		JLabel label = new JLabel("Simple sample", SwingConstants.CENTER);
 		//Add label on panel and centralize it
 		panel.add(label, SwingConstants.CENTER);
-		addWindowListener(new ConfirmOnClose());
+		addWindowListener(new FrameClose());
 	}
 	
 	//Class that validate the message when close frame
-	class ConfirmOnClose extends WindowAdapter {
+	class FrameClose extends WindowAdapter {
 		//Method that validate the message when close frame
 		public void windowClosing(WindowEvent e) {
-				int confirm = JOptionPane.showConfirmDialog(e.getWindow(), "Are you want exit?");
-					if( confirm == 0 ) {
+				int confirm = JOptionPane.showConfirmDialog(
+						e.getWindow(),
+						"Are you want exit?",
+						JOptionPane.YES_NO_OPTION,
+						//JOptionPane.QUESTION_MESSAGE
+						);
+					if(confirm == JOptionPane.YES_NO_OPTION ) {
 						e.getWindow().dispose();
 						System.exit(0);
 		            }
