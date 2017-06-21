@@ -1,66 +1,65 @@
 package common;
 
 import java.awt.GridLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
-//Extends to JFrame
-public class Principal extends JFrame{
+public class Principal extends JFrame implements ActionListener{
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	//Class main
-	public static void main (String [] Args){
-		//Create frame principal 
-		Principal principal = new Principal();
-		//Set default behavior when closed (Exit when closed)
-		principal.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		//Set frame visible to user
-		principal.setVisible(true);
-	}
-	
-	//Constructor
-	public Principal(){
-		//Set frame title
-		this.setTitle("Easy example");
-		//Set frame size
-		this.setSize(500,450);
-		//Invoke method to initialize the Frame
-		initFrame();
-	}
-	
-	//Method initialize frame
-	public void initFrame(){
-		//JPanel panel = new JPanel();
-		JPanel panel = (JPanel)this.getContentPane();
-		//Set panel layout with 3 - Rows and 1 - Column
-		panel.setLayout(new GridLayout(3,1));
-		//Create a label and centralize it
-		JLabel label = new JLabel("Simple sample", SwingConstants.CENTER);
-		//Add label on panel and centralize it
-		panel.add(label, SwingConstants.CENTER);
-		addWindowListener(new FrameClose());
-	}
-	
-	//Class that validate the message when close frame
-	class FrameClose extends WindowAdapter {
-		//Method that validate the message when close frame
-		public void windowClosing(WindowEvent e) {
-				int confirm = JOptionPane.showConfirmDialog(
-						e.getWindow(),
-						"Are you want exit?",
-						JOptionPane.YES_NO_OPTION,
-						//JOptionPane.QUESTION_MESSAGE
-						);
-					if(confirm == JOptionPane.YES_NO_OPTION ) {
-						e.getWindow().dispose();
-						System.exit(0);
-		            }
-		        }
-		 } 
+    private enum Action {FUNC};
+
+    public static void main (String [] Args){
+    	
+    	new Principal();
+    	
+    }
+    
+    Principal()
+    {
+        new JFrame();
+        setTitle("To buy or not to buy?");
+        setLayout(new GridLayout(1,1));
+        setVisible(true);
+        setSize(300,300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       
+        JButton bot01 = new JButton("It's the question!");
+        bot01.addActionListener(this);
+        bot01.setActionCommand(Action.FUNC.name());
+        bot01.setMnemonic(KeyEvent.VK_T);
+       
+        add(bot01);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        if(e.getActionCommand() == Action.FUNC.name())
+        {
+            int result = JOptionPane.showConfirmDialog(null, "To buy a Nintendo Switch?", null, JOptionPane.YES_NO_OPTION);
+
+            if(result == JOptionPane.YES_OPTION)
+            {
+                JOptionPane.showMessageDialog(null, "Smart guy!");
+            }
+        else
+        {
+            while(result != JOptionPane.YES_OPTION)
+            {
+                result = JOptionPane.showConfirmDialog(null, "It's not a option!", null, JOptionPane.YES_NO_OPTION);
+           
+                if(result == JOptionPane.YES_OPTION)
+                {
+                    JOptionPane.showMessageDialog(null, "Good boy");
+                    break;
+                }
+            }
+        }
+        }
+    }
 }
